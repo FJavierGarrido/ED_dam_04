@@ -9,14 +9,21 @@ import org.eclipse.swt.widgets.Text;
 import javax.swing.JOptionPane;
 //import org.w3c.dom.Text;
 
+/**
+ * Esta clase representa una calculadora básica con una interfaz gráfica de usuario.
+ * Permite realizar operaciones aritméticas simples: suma, resta, multiplicación y división.
+ * La calculadora tiene una capacidad máxima de dígitos y muestra el resultado en una pantalla.
+ * @author Javier Garrido
+ *
+ * @version 1.0
+ */
 public class Calculadora {
 
-    // Constantes
+    /** Constantes para la lógica de la calculadora */
     final int MAX_DIGITS = 5;
     final int MODE_ENTRADA = 0;
     final int MODE_RESULTADO = 1;
 
-    //Variables
     int modo;
     int digito;
     int valor1;
@@ -24,17 +31,24 @@ public class Calculadora {
     String operacion;
     boolean inicializa_resultado;
 
+    /** Campo de texto para mostrar el resultado */
     private static Text texto_resultado;
 
+    /**
+     * Constructor de la calculadora.
+     * @param gui Determina si se dibuja la interfaz gráfica de usuario.
+     */
     public Calculadora(boolean gui) {
 
-        //Inicialización de las variables.
+        // Inicializa las variables de la calculadora
         inicializa();
 
+        // Si se requiere interfaz gráfica, dibuja la calculadora
         if (gui==true) dibujaCalculadora();
 
     }
 
+    /** Método para dibujar la interfaz gráfica de la calculadora */
     private void dibujaCalculadora() {
 
         Display display = Display.getDefault();
@@ -48,6 +62,7 @@ public class Calculadora {
 
         //botón con el número 0
         Button button_0 = new Button(shlCalculadora, SWT.NONE);
+        // Configuración de eventos para el botón
         button_0.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -220,6 +235,7 @@ public class Calculadora {
         texto_resultado.setText("0");
         texto_resultado.setBounds(22, 19, 196, 21);
 
+        // Configuración de la ventana y su visualización
         shlCalculadora.open();
         shlCalculadora.layout();
         while (!shlCalculadora.isDisposed()) {
@@ -229,6 +245,7 @@ public class Calculadora {
         }
     }
 
+    /** Método para inicializar el estado de la calculadora */
     public void inicializa() {
         operacion = "null";
         valor1 = 0;
@@ -237,19 +254,35 @@ public class Calculadora {
         inicializa_resultado = true;
     }
 
+    /** Método para obtener el resultado en formato String
+     *
+     * @return the string
+     */
     public String getResultadoString (){
         return texto_resultado.getText();
     }
 
+    /** Método para establecer el resultado en formato String
+     *
+     * @param s the s
+     */
     public void setResultadoString(String s){
         texto_resultado.setText(s);
     }
 
+    /** Método para obtener el resultado en formato entero
+     *
+     * @return the resultado int
+     */
     public int getResultadoInt() {
         String resultado = texto_resultado.getText();
         return Integer.parseInt(resultado);
     }
 
+    /**
+     * Método para añadir un nuevo dígito a la pantalla.
+     * @param digito El dígito a añadir.
+     */
     public void anadeNuevoDigito(int digito){
         if (inicializa_resultado)
             setResultadoString("");
@@ -268,6 +301,10 @@ public class Calculadora {
         inicializa_resultado = false;
     }
 
+    /**
+     * Método para ejecutar una operación.
+     * @param new_operacion La operación a ejecutar.
+     */
     public void ejecutarOperador(String new_operacion) {
 
         int resultado;
@@ -290,6 +327,7 @@ public class Calculadora {
         operacion = new_operacion;
     }
 
+    /** Método para ejecutar la operación de igual */
     public void ejecutarIgual(){
         int resultado = 0;
 
@@ -300,6 +338,10 @@ public class Calculadora {
         operacion = "null";
     }
 
+    /** Método para ejecutar la operación seleccionada
+     *
+     * @return the int
+     */
     public int ejecutarOperacion() {
         int resultado = 0;
 
@@ -330,6 +372,10 @@ public class Calculadora {
         return resultado;
     }
 
+    /**
+     * Método para mostrar el resultado en la pantalla.
+     * @param resultado El resultado a mostrar.
+     */
     public void muestraResultado(int resultado){
         setResultadoString(Integer.toString(resultado));
         valor1 = resultado;
@@ -337,7 +383,13 @@ public class Calculadora {
         inicializa_resultado = true;
     }
 
+    /**
+     * Método principal para iniciar la calculadora
+     *
+     * @param args the args
+     */
     public static void main(String args[]) {
+        // Crear una instancia de la calculadora con interfaz gráfica
         Calculadora calculadora = new Calculadora(true);
     }
 
